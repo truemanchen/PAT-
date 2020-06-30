@@ -6,7 +6,7 @@
 #include<cstring>
 using namespace std;
 const int maxn = 9999;
-vector<int> g[maxn],temp;
+vector<int> g[maxn], temp;
 set<int> s;
 queue<int> q;
 int hasht[maxn] = {}, maxdeep = -1, layer[maxn] = {};
@@ -31,14 +31,12 @@ void LayerOrder(int root, int deep) {
 	while (!q.empty()) {
 		int r = q.front();
 		q.pop();
-		hasht[r] = 1;
 		for (int i = 0; i < g[r].size(); i++) {
-			if (hasht[g[r][i]] == 0) {
-				layer[g[r][i]] = layer[r] + 1;
-				q.push(g[r][i]);
-			}
+			layer[g[r][i]] = layer[r] + 1;
+			q.push(g[r][i]);
 		}
 	}
+	return;
 }
 int main()
 {
@@ -57,20 +55,19 @@ int main()
 			block++;
 		}
 	}
-	if (block > 1) 
+	if (block > 1)
 		cout << "Error: " << block << " components";
 	else
 	{
-		memset(hasht, 0, sizeof(hasht));
-		LayerOrder(1, 1);
-		for (auto it = temp.begin(); it != temp.end(); it++) 
+		//LayerOrder(1, 1);
+		for (auto it = temp.begin(); it != temp.end(); it++)
 			s.insert(*(it));
 		temp.clear();
 		memset(hasht, 0, sizeof(hasht));
 		dfs(*(s.begin()), 1);
-		for (auto it = temp.begin(); it != temp.end(); it++) 
+		for (auto it = temp.begin(); it != temp.end(); it++)
 			s.insert(*(it));
-		for (auto it = s.begin(); it != s.end(); it++) 
+		for (auto it = s.begin(); it != s.end(); it++)
 			printf("%d\n", *(it));
 	}
 	return 0;

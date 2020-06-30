@@ -3,46 +3,35 @@
 #include<algorithm>
 using namespace std;
 const int N = 100002;
-int ans[N];
+int temp,hasht[N];
 int main() {
-	int x, count = 0,times=0,flag=1,start=-1,end=-1,n=0;
+	int count = 0,start=0,n=0,m=0,k=1;
 	cin >> count;
 	for (int i = 0; i < count; i++) {
-		cin >> ans[i];
-		if (ans[i] == 0)start = i;
-		if (ans[i] != i)flag = 0;
+		scanf("%d", &temp);
+		hasht[temp] = i;
+		if (temp != i)m++;
 	}
-	while (flag == 0) {
-		for (int i = 0; i < count; i++) {
-			if (ans[i] == start) { 
-				end = i; 
-				break;
-			}
-		}
-		if (ans[0] != 0) {
-			swap(ans[start], ans[end]);
-			start = end;
-		}
-		else {
-			for (int i = 0; i < count; i++) {
-				if (ans[i] != i) {
-					end = i;
+	while (m!=0) {
+		if (hasht[0] == 0) {
+			while (k < count) {
+				if (hasht[k] != k) {
+					swap(hasht[0], hasht[k]);
 					break;
 				}
+				k++;
 			}
-			swap(ans[start], ans[end]);
-			start = end;
+			m++;
+			n++;
 		}
-
-		for (int i = 0; i < count;i++) {
-			if (ans[i] != i) {
-				flag =0; 
-				break;
-			}
-			flag = 1;
+		while(hasht[0] != 0) {
+			start = hasht[0];
+			if (hasht[start] == 0)m -= 2;
+			else m--;
+			swap(hasht[0], hasht[start]);
+			n++;
 		}
-		n++;
 	}
-	cout << n;
+	printf("%d", n);
 	return 0;
 }
